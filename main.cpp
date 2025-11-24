@@ -2,13 +2,15 @@
 #include <vector>
 #include <iterator>
 
+
 int
 memoryOfTypes(const std::vector<size_t>& ob)
 {
     size_t sum = 0;
-    size_t pointerMemory = 8;
+    size_t pointerMemory = sizeof(size_t);
     size_t maxMemory = 0;
     for (std::vector<size_t>::const_iterator it = ob.begin(); it != ob.end(); ++it) {
+        assert((*it % 2 == 0 || *it == 1) && *it >= 1 && *it <= 8);
         while (true) {
             if (pointerMemory == 0) pointerMemory = 8;
             if (pointerMemory % *it == 0) {
@@ -21,9 +23,11 @@ memoryOfTypes(const std::vector<size_t>& ob)
             --pointerMemory;
         }
     }
+
     while (sum % maxMemory != 0) {
         ++sum;
     }
+
     return sum;
 }
 
